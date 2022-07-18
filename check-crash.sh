@@ -18,6 +18,8 @@ FAIL="\033[1;31mFAIL\033[m"
 cleanup
 trap cleanup EXIT
 
+make
+
 # launch the server. strace so we can see SEGVs.
 strace -f -e none -o "$STRACELOG" ./clean-env.sh ./$1 8080 &> /dev/null &
 need_cleanup=1

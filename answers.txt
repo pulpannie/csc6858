@@ -1,1 +1,15 @@
-## Place your answers here.
+## Answers by annie
+
+Lab 1 Part 1:
+
+Smash Header values. 
+in http.c, http_request_header(), value[512] local variable. 
+Inside the function, previous stack frame starts at addresss 0x7fff ffff dcd0
+current stack frame rbp is stored at 0x7fff ffff dcc0
+current stack frame rsp is stored at 0x7fff ffff d880
+value[512] array is stored at 0x7fff ffff da90 
+so, dcc0 (rbp) - da90 (value array) = 560.
+
+Send header value payload larger than 564 to overwrite return address.
+until 560 is the rbp. Next 4 bytes overwrite the return address.
+

@@ -73,19 +73,19 @@ const char *http_request_line(int fd, char *reqpath, char *env, size_t *env_len)
         return "Socket IO error";
 
     /* Parse request like "GET /foo.html HTTP/1.0" */
-    sp1 = strchr(buf, ' ');
+    sp1 = strchr(buf, ' '); 
     if (!sp1)
         return "Cannot parse HTTP request (1)";
-    *sp1 = '\0';
-    sp1++;
+    *sp1 = '\0';            /* buf = "GET /foo.html HTTP/1.0" */
+    sp1++;                  /* sp1 = "/foo.html HTTP/1.0" */
     if (*sp1 != '/')
         return "Bad request path";
 
-    sp2 = strchr(sp1, ' ');
+    sp2 = strchr(sp1, ' '); 
     if (!sp2)
         return "Cannot parse HTTP request (2)";
-    *sp2 = '\0';
-    sp2++;
+    *sp2 = '\0';            
+    sp2++;                  /* sp2 = "HTTP//1.0" */
 
     /* We only support GET and POST requests */
     if (strcmp(buf, "GET") && strcmp(buf, "POST"))
