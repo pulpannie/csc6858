@@ -1,5 +1,9 @@
 ## Answers by annie
 
+*Not sure if because not doing lab in VM provided by course,
+but needed to modify check-*.sh files and added a make command after the clean part at the beginning
+ to make the server run correctly.
+
 Lab 1 Part 1:
 
 Smash Header values. 
@@ -22,3 +26,6 @@ So, place shellcode in first part of value array,
 shellcode is 69 bytes so add padding 568 - 69
 and for the last 8 bytes overwrite the return address to be the start of the value array.
 
+Lab 1 Part 3:
+unlink syscall is stored at 0x1555 5542 6d00
+unlink syscall should be placed in 0x7fff ffff dcc0 
