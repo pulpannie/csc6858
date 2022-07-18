@@ -10,6 +10,15 @@ current stack frame rsp is stored at 0x7fff ffff d880
 value[512] array is stored at 0x7fff ffff da90 
 so, dcc0 (rbp) - da90 (value array) = 560.
 
-Send header value payload larger than 564 to overwrite return address.
-until 560 is the rbp. Next 4 bytes overwrite the return address.
+Send header value payload larger than 568 to overwrite return address.
+until 560 is the rbp. Next 8 bytes overwrite the return address.
+
+Lab 1 Part 2:
+
+for some reason address of value[512] array moved to 0x7fff ffff da80. 
+And the rip at 0x7fff ffff dcb8
+But still dcb8 - da80 = 568
+So, place shellcode in first part of value array, 
+shellcode is 69 bytes so add padding 568 - 69
+and for the last 8 bytes overwrite the return address to be the start of the value array.
 

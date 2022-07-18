@@ -98,11 +98,11 @@ const char *http_request_line(int fd, char *reqpath, char *env, size_t *env_len)
     if ((qp = strchr(sp1, '?')))
     {
         *qp = '\0';
-        envp += sprintf(envp, "QUERY_STRING=%s", qp + 1) + 1;
+        envp += sprintf(envp, "QUERY_STRING=%s", qp + 1) + 1; /*print only the query part of sp1*/
     }
 
     /* decode URL escape sequences in the requested path into reqpath */
-    url_decode(reqpath, sp1);
+    url_decode(reqpath, sp1); /*sp1 is now only the url part without query */
 
     envp += sprintf(envp, "REQUEST_URI=%s", reqpath) + 1;
 

@@ -2,7 +2,7 @@
 
 HOST=localhost
 PORT=8080
-GRAD=/home/student/grades.txt
+GRAD=/home/annie/grades.txt
 
 cleanup() {
   killall -w zookld zookd zookfs zookd-nxstack zookfs-nxstack zookd-exstack zookfs-exstack &>/dev/null
@@ -13,6 +13,8 @@ FAIL="\033[1;31mFAIL\033[m"
 
 cleanup
 trap cleanup EXIT
+
+make
 
 # launch the server
 script -q -f -c "sh -c './clean-env.sh ./$1 8080'" /tmp/zookd.out &> /dev/null &
