@@ -28,4 +28,12 @@ and for the last 8 bytes overwrite the return address to be the start of the val
 
 Lab 1 Part 3:
 unlink syscall is stored at 0x1555 5542 6d00
-unlink syscall should be placed in 0x7fff ffff dcc0 
+unlink syscall should be placed in 0x7fff ffff dcc0, which is the return address of accidentally
+argument to unlink is placed in %rdi by accidentally, by moving %rbp+0x10 into %rdi. 
+So we need to send string payload ("/user/annie/grades.txt") into %rbp+0x10.
+
+Lab 1 Part 4:
+Vulnerabilities:
+1. http_request_header envvar[512]
+2. reqpath[4096]
+

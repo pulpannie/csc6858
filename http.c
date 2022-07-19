@@ -154,7 +154,9 @@ const char *http_request_headers(int fd)
             if (buf[i] == '-')
                 buf[i] = '_';
         }
-
+        if (strlen(sp) > 512){
+            sp[511] = '\0';
+        }
         /* Decode URL escape sequences in the value */
         url_decode(value, sp);
 
@@ -459,6 +461,7 @@ void url_decode(char *dst, const char *src)
         }
         else
         {
+            
             *dst = *src;
             src++;
 
