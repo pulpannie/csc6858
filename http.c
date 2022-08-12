@@ -276,7 +276,8 @@ void http_serve(int fd, const char *name)
     char pn[1024];
     struct stat st;
 
-    getcwd(pn, sizeof(pn));
+    //getcwd(pn, sizeof(pn));
+    pn[0] = '\0';
     setenv("DOCUMENT_ROOT", pn, 1);
 
     strcat(pn, name);

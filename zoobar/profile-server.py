@@ -7,7 +7,7 @@ import sandboxlib
 import urllib
 import hashlib
 import socket
-import bank
+import bank_client
 import zoodb
 
 from debug import *
@@ -20,6 +20,7 @@ class ProfileAPIServer(rpclib.RpcServer):
     def __init__(self, user, visitor):
         self.user = user
         self.visitor = visitor
+        os.setuid(61012)
 
     def rpc_get_self(self):
         return self.user
@@ -28,27 +29,22 @@ class ProfileAPIServer(rpclib.RpcServer):
         return self.visitor
 
     def rpc_get_xfers(self, username):
-        xfers = []
-        for xfer in bank.get_log(username):
-            xfers.append({ 'sender': xfer.sender,
-                           'recipient': xfer.recipient,
-                           'amount': xfer.amount,
-                           'time': xfer.time,
-                         })
+        xfers = bank_client.get_log(username)
         return xfers
 
     def rpc_get_user_info(self, username):
         person_db = zoodb.person_setup()
         p = person_db.query(zoodb.Person).get(username)
+        balance = bank_client.balance(username)
         if not p:
             return None
         return { 'username': p.username,
                  'profile': p.profile,
-                 'zoobars': bank.balance(username),
+                 'zoobars': balance,
                }
 
     def rpc_xfer(self, target, zoobars):
-        bank.transfer(self.user, target, zoobars)
+        bank_client.transfer(self.user, target, zoobars)
 
 def run_profile(pcode, profile_api_client):
     globals = {'api': profile_api_client}
@@ -56,10 +52,16 @@ def run_profile(pcode, profile_api_client):
 
 class ProfileServer(rpclib.RpcServer):
     def rpc_run(self, pcode, user, visitor):
-        uid = 0
-
-        userdir = '/tmp'
-
+        uid = 61012
+        for c in user:
+            if not c.isalnum():
+                user = user.replace(c,"a")
+        #userdir = "/tmp"
+        userdir = "/" + user
+        if not os.path.exists(userdir):
+            os.mkdir(userdir) 
+            os.chmod(userdir, 700)   
+    
         (sa, sb) = socket.socketpair(socket.AF_UNIX, socket.SOCK_STREAM, 0)
         pid = os.fork()
         if pid == 0:

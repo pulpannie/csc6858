@@ -19,6 +19,15 @@ set_perms() {
     local perms="$2"
     local pn="$3"
 
+    chown -R $ownergroup $pn
+    chmod -R $perms $pn
+}
+
+set_perms_nonrec() {
+    local ownergroup="$1"
+    local perms="$2"
+    local pn="$3"
+
     chown $ownergroup $pn
     chmod $perms $pn
 }
@@ -56,8 +65,6 @@ cp /etc/resolv.conf /jail/etc/
 mkdir -p /jail/usr/share/zoneinfo
 cp -r /usr/share/zoneinfo/America /jail/usr/share/zoneinfo/
 
-create_socket_dir /jail/echosvc 61010:61010 755
-
 mkdir -p /jail/tmp
 chmod a+rwxt /jail/tmp
 
@@ -69,4 +76,21 @@ rm -rf /jail/zoobar/db
 
 python /jail/zoobar/zoodb.py init-person
 python /jail/zoobar/zoodb.py init-transfer
+python /jail/zoobar/zoodb.py init-cred
+python /jail/zoobar/zoodb.py init-bank
 
+set_perms 61012:61000 755 /jail/zoobar/db/person
+set_perms 61021:61000 755 /jail/zoobar/db/transfer
+set_perms 61020:61000 700 /jail/zoobar/db/cred
+set_perms 61021:61000 700 /jail/zoobar/db/bank
+set_perms_nonrec 61012:61000 600 /jail/zoobar/db/person/person.db
+set_perms_nonrec 61021:61000 600 /jail/zoobar/db/transfer/transfer.db
+set_perms_nonrec 61020:61000 600 /jail/zoobar/db/cred/cred.db
+set_perms_nonrec 61021:61000 600 /jail/zoobar/db/bank/bank.db
+#set_perms_nonrec 61012:61012 755 /jail/usr/bin/python
+set_perms_nonrec 61012:61012 755 /jail/zoobar/index.cgi
+
+create_socket_dir /jail/echosvc 61010:61010 755
+create_socket_dir /jail/authsvc 61020:61020 755
+create_socket_dir /jail/banksvc 61021:61021 755
+create_socket_dir /jail/profilesvc 0:0 755
