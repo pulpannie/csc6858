@@ -189,6 +189,13 @@ class sym_minus(sym_binop):
 
 ## Exercise 2: your code here.
 ## Implement AST nodes for division and multiplication.
+class sym_mul(sym_binop):
+  def _z3expr(self, printable):
+    return z3expr(self.a, printable) * z3expr(self.b, printable)
+
+class sym_div(sym_binop):
+  def _z3expr(self, printable):
+    return z3expr(self.a, printable) / z3expr(self.b, printable)
 
 ## String operations
 
@@ -384,7 +391,7 @@ def fork_and_check_worker(constr, conn):
       if v.sort() == z3.IntSort():
         m[str(k)] = v.as_long()
       elif v.sort() == z3str.StringSort():
-        # print "Model string %s: %s" % (k, v)
+        print "Model string %s: %s" % (k, v)
         vs = str(v)
         if not vs.startswith('__cOnStStR_'):
           if not str(k).startswith('_t_'):
@@ -482,6 +489,20 @@ class concolic_int(int):
 
   ## Exercise 2: your code here.
   ## Implement symbolic division and multiplication.
+  def __mul__(self, o):
+    if isinstance(o, concolic_int):
+      res = self.__v * o.__v
+    else:
+      res = self.__v * o
+    return concolic_int(sym_mul(ast(self), ast(o)), res)
+
+  def __div__(self, o):
+    if isinstance(o, concolic_int):
+      res = self.__v / o.__v
+    else:
+      res = self.__v / o
+    return concolic_int(sym_div(ast(self), ast(o)), res)
+
 
   def _sym_ast(self):
     return self.__sym
@@ -675,6 +696,9 @@ def concolic_test(testfunc, maxiter = 100, verbose = 0):
 
     if verbose > 1:
       print 'Test generated', len(cur_path_constr), 'branches:'
+      #for c in cur_path_constr:
+        #print "branch", c
+        #print "opposite branch", sym_not(c)
       for (c, caller) in zip(cur_path_constr, cur_path_constr_callers):
         print indent(z3expr(c, True)), '@', '%s:%d' % (caller[0], caller[1])
 
@@ -717,6 +741,22 @@ def concolic_test(testfunc, maxiter = 100, verbose = 0):
     ##   such as if that variable turns out to be irrelevant to
     ##   the overall constraint, so be sure to preserve values
     ##   from the initial input (concrete_values).
+    i = 0
+    for branch in cur_path_constr:
+      constr = sym_not(branch)    
+      if constr in checked:
+        pass
+      else:
+        checked.add(constr)
+      (ok, model) = fork_and_check(constr)
+      #print "model: ", model.values()
+      #print "i:", i, "caller[i]:", cur_path_constr_callers[i]
+      if ok == z3.sat:
+        inputs.add(model, cur_path_constr_callers[i])
+      i = i + 1
+
+          
+          
 
   if verbose > 0:
     print 'Stopping after', iter, 'iterations'
