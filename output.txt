@@ -1,0 +1,241 @@
+Testing f..
+Trying concrete values: {}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:   ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+ -> None
+Test generated 2 branches:
+  (s == "foo") == False @ /home/httpd/lab/symex/symsql.py:23
+  (s == "barr") == False @ /home/httpd/lab/symex/symsql.py:23
+branch args s == "foo"
+branch args False
+branch:  (s == "foo") == False constr:  And(Not((s == "foo") == False))
+Model string s: __cOnStStR__x66_x6f_x6f
+model:  {'s': 'foo'}
+inputs:  [(0, {'s': 'foo'})]
+branch args s == "barr"
+branch args False
+branch:  (s == "barr") == False constr:  And((s == "foo") == False, Not((s == "barr") == False))
+Model string s: __cOnStStR__x62_x61_x72_x72
+model:  {'s': 'barr'}
+inputs:  [(0, {'s': 'foo'}), (1, {'s': 'barr'})]
+Trying concrete values: {'s': 'foo'}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:  foo ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+foo -> 924
+Test generated 1 branches:
+  (s == "foo") == True @ /home/httpd/lab/symex/symsql.py:23
+branch args s == "foo"
+branch args True
+branch:  (s == "foo") == True constr:  And(Not((s == "foo") == True))
+Model string _t_len_s_1: __cOnStStR__x31
+Model string s: __cOnStStR__x53
+Model string _t_len_s_2: String!val!0
+Model string _t_val_s_1_0: __cOnStStR__x34_x34
+model:  {'s': 'S', '_t_val_s_1_0': '44', '_t_len_s_1': '1'}
+inputs:  [(1, {'s': 'barr'}), (2, {'s': 'S', '_t_val_s_1_0': '44', '_t_len_s_1': '1'})]
+Trying concrete values: {'s': 'barr'}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:  barr ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+barr -> 22
+Test generated 2 branches:
+  (s == "foo") == False @ /home/httpd/lab/symex/symsql.py:23
+  (s == "barr") == True @ /home/httpd/lab/symex/symsql.py:23
+branch args s == "foo"
+branch args False
+branch:  (s == "foo") == False constr:  And(Not((s == "foo") == False))
+branch args s == "barr"
+branch args True
+branch:  (s == "barr") == True constr:  And((s == "foo") == False, Not((s == "barr") == True))
+Model string _t_len_s_1: __cOnStStR__x31
+Model string s: __cOnStStR__x50
+Model string _t_len_s_2: String!val!0
+Model string _t_val_s_1_0: __cOnStStR__x34_x31
+model:  {'s': 'P', '_t_val_s_1_0': '41', '_t_len_s_1': '1'}
+inputs:  [(2, {'s': 'S', '_t_val_s_1_0': '44', '_t_len_s_1': '1'}), (3, {'s': 'P', '_t_val_s_1_0': '41', '_t_len_s_1': '1'})]
+Trying concrete values: {'s': 'S', '_t_val_s_1_0': '44', '_t_len_s_1': '1'}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:  S ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+S -> None
+Test generated 2 branches:
+  (s == "foo") == False @ /home/httpd/lab/symex/symsql.py:23
+  (s == "barr") == False @ /home/httpd/lab/symex/symsql.py:23
+branch args s == "foo"
+branch args False
+branch:  (s == "foo") == False constr:  And(Not((s == "foo") == False))
+branch args s == "barr"
+branch args False
+branch:  (s == "barr") == False constr:  And((s == "foo") == False, Not((s == "barr") == False))
+Trying concrete values: {'s': 'P', '_t_val_s_1_0': '41', '_t_len_s_1': '1'}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:  P ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+P -> None
+Test generated 2 branches:
+  (s == "foo") == False @ /home/httpd/lab/symex/symsql.py:23
+  (s == "barr") == False @ /home/httpd/lab/symex/symsql.py:23
+branch args s == "foo"
+branch args False
+branch:  (s == "foo") == False constr:  And(Not((s == "foo") == False))
+branch args s == "barr"
+branch args False
+branch:  (s == "barr") == False constr:  And((s == "foo") == False, Not((s == "barr") == False))
+Stopping after 5 iterations
+Found all cases for f
+Testing g..
+Trying concrete values: {}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  0 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+0 -> None
+Test generated 3 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 9241) == False @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+model:  {'x': -23L}
+inputs:  [(0, {'x': -23L})]
+branch args x == 5
+branch args False
+branch:  (x == 5) == False constr:  And((x == -23) == False, Not((x == 5) == False))
+model:  {'x': 5L}
+inputs:  [(0, {'x': -23L}), (1, {'x': 5L})]
+branch args x == 9241
+branch args False
+branch:  (x == 9241) == False constr:  And((x == -23) == False,
+    (x == 5) == False,
+    Not((x == 9241) == False))
+model:  {'x': 9241L}
+inputs:  [(0, {'x': -23L}), (1, {'x': 5L}), (2, {'x': 9241L})]
+Trying concrete values: {'x': -23L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  -23 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+-23 -> yy
+Test generated 1 branches:
+  (x == -23) == True @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args True
+branch:  (x == -23) == True constr:  And(Not((x == -23) == True))
+model:  {'x': 0L}
+inputs:  [(1, {'x': 5L}), (2, {'x': 9241L}), (3, {'x': 0L})]
+Trying concrete values: {'x': 5L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  5 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+5 -> another
+Test generated 2 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == True @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+branch args x == 5
+branch args True
+branch:  (x == 5) == True constr:  And((x == -23) == False, Not((x == 5) == True))
+model:  {'x': 0L}
+inputs:  [(2, {'x': 9241L}), (3, {'x': 0L}), (4, {'x': 0L})]
+Trying concrete values: {'x': 9241L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  9241 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+9241 -> firstthing
+Test generated 3 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 9241) == True @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+branch args x == 5
+branch args False
+branch:  (x == 5) == False constr:  And((x == -23) == False, Not((x == 5) == False))
+branch args x == 9241
+branch args True
+branch:  (x == 9241) == True constr:  And((x == -23) == False,
+    (x == 5) == False,
+    Not((x == 9241) == True))
+model:  {'x': 0L}
+inputs:  [(3, {'x': 0L}), (4, {'x': 0L}), (5, {'x': 0L})]
+Trying concrete values: {'x': 0L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  0 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+0 -> None
+Test generated 3 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 9241) == False @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+branch args x == 5
+branch args False
+branch:  (x == 5) == False constr:  And((x == -23) == False, Not((x == 5) == False))
+branch args x == 9241
+branch args False
+branch:  (x == 9241) == False constr:  And((x == -23) == False,
+    (x == 5) == False,
+    Not((x == 9241) == False))
+Trying concrete values: {'x': 0L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  0 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+0 -> None
+Test generated 3 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 9241) == False @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+branch args x == 5
+branch args False
+branch:  (x == 5) == False constr:  And((x == -23) == False, Not((x == 5) == False))
+branch args x == 9241
+branch args False
+branch:  (x == 9241) == False constr:  And((x == -23) == False,
+    (x == 5) == False,
+    Not((x == 9241) == False))
+Trying concrete values: {'x': 0L}
+query: SELECT test2.name AS test2_name, test2.value AS test2_value 
+FROM test2 primary_key:  0 ,
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+row table PrimaryKeyConstraint(Column('name', Integer(), table=<test2>, primary_key=True, nullable=False))
+0 -> None
+Test generated 3 branches:
+  (x == -23) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 5) == False @ /home/httpd/lab/symex/symsql.py:23
+  (x == 9241) == False @ /home/httpd/lab/symex/symsql.py:23
+branch args x == -23
+branch args False
+branch:  (x == -23) == False constr:  And(Not((x == -23) == False))
+branch args x == 5
+branch args False
+branch:  (x == 5) == False constr:  And((x == -23) == False, Not((x == 5) == False))
+branch args x == 9241
+branch args False
+branch:  (x == 9241) == False constr:  And((x == -23) == False,
+    (x == 5) == False,
+    Not((x == 9241) == False))
+Stopping after 7 iterations
+Found all cases for g

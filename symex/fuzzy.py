@@ -8,6 +8,7 @@ import signal
 import operator
 import inspect
 import __builtin__
+import copy
 
 ## Our AST structure
 
@@ -543,6 +544,13 @@ class concolic_str(str):
   ## Exercise 4: your code here.
   ## Implement symbolic versions of string length (override __len__)
   ## and contains (override __contains__).
+  def __len__(self):
+    res = len(self.__v)
+    return concolic_int(sym_length(ast(self)),res)
+  
+  def __contains__(self, o):
+    res = self.__v.__contains__(o)
+    return concolic_bool(sym_contains(ast(self), ast(o)), res)
 
   def startswith(self, o):
     res = self.__v.startswith(o)
@@ -741,18 +749,44 @@ def concolic_test(testfunc, maxiter = 100, verbose = 0):
     ##   such as if that variable turns out to be irrelevant to
     ##   the overall constraint, so be sure to preserve values
     ##   from the initial input (concrete_values).
-    i = 0
+    i = 0 
     for branch in cur_path_constr:
-      constr = sym_not(branch)    
+      for args in branch.args:
+        print "branch args", args
+      #constr = sym_eq(branch.args[0], sym_not(branch.args[1]))
+      constr = sym_not(branch)
+      constr = cur_path_constr[:i] + [constr]
+      constr = sym_and(*constr)
+      print "branch: ", branch, "constr: ", constr.__str__()    
+      
       if constr in checked:
-        pass
+        i = i + 1
+        continue
       else:
         checked.add(constr)
+
       (ok, model) = fork_and_check(constr)
-      #print "model: ", model.values()
-      #print "i:", i, "caller[i]:", cur_path_constr_callers[i]
+      print "model: ", model
+      #print "i:", i, "caller[i]:", cur_path_constr_callers[i
+      #print "initial inputs: ", inputs.inputs.queue
+      #for n in model:
+      #  print "n: ", n
+      #  if '_t_' in n:
+      #    del a[n]
+      #exists = 0  
+      #print "model copy: ", a
+      #a.update(concrete_values) 
+      exists = 0
+      for j in concrete_values:
+        for k in model:
+          if j == k:
+            exists = 1
+        if exists == 0:
+          model.update({j:concrete_values[j]})
+        exists = 0
       if ok == z3.sat:
         inputs.add(model, cur_path_constr_callers[i])
+      print "inputs: ", inputs.inputs.queue
       i = i + 1
 
           

@@ -1,0 +1,20 @@
+Testing f..
+Trying concrete values: {}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:   ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row pk:  foo query pk  !!
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row pk:  barr query pk  !!
+ -> None
+Test generated 2 branches:
+  (s == "foo") == False @ /home/httpd/lab/symex/symsql.py:27
+  (s == "barr") == False @ /home/httpd/lab/symex/symsql.py:27
+Model string s: __cOnStStR__x66_x6f_x6f
+Model string s: __cOnStStR__x62_x61_x72_x72
+Trying concrete values: {'s': 'foo'}
+query: SELECT test1.name AS test1_name, test1.value AS test1_value 
+FROM test1 primary_key:  foo ,
+row table PrimaryKeyConstraint(Column('name', String(length=128), table=<test1>, primary_key=True, nullable=False))
+row pk:  foo query pk foo !!
+ret:  924
